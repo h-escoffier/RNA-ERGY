@@ -1,7 +1,7 @@
 from shared import Cleaner, bp_attribution
 import numpy as np
 import os
-import sys
+import argparse
 
 
 def create_freq_list():
@@ -52,7 +52,8 @@ def pseudo_energy(score, frequency):
 
 def file_generator(score):
     """
-    Create 10 files (one per base pair) of 20 lines each. Each line contains the pseudo energy of an interval of 1 between 0 and 20.
+    Create, in a folder 'Energy', 10 files (one per base pair) of 20 lines each.
+    Each line contains the pseudo energy of an interval of 1 between 0 and 20.
     :param score: A list of 10 lists of the form : [[[AA], [0,0...0]], [[AC], [0,0...0]] ... [[UU], [0,0...0]]]
     An element as the form: [[AA][x,y, ... , z]] with x,y,z respectively the pseudo-energy of the intervals [0,1], [1,2] and [19,20].
     """
@@ -84,7 +85,7 @@ def main(pdb_folder):
 
 
 if __name__ == '__main__':
-    try:
-        main(sys.argv[1])
-    except IndexError:
-        print('Give the path of the folder containing the PdB Files as an argument.')
+    parser = argparse.ArgumentParser()
+    parser.add_argument('pdb_folder', help="Give the path of the folder containing the PdB Files as an argument.")
+    args = parser.parse_args()
+    main(args.pdb_folder)

@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import os
-import sys
+import argparse
 
 
 def interaction_profile_plot(file):
@@ -30,7 +30,7 @@ def interaction_profile_plot(file):
     plt.savefig('plot/' + str(file) + '.png')
 
 
-def main(folder):
+def main(folder='Energy'):
     """
     Create graphs of the interaction profiles for each base pair and save them in a 'plot' folder.
     :param folder: Folder containing 10 file for each base pair containing for each the pairwise scores.
@@ -44,7 +44,10 @@ def main(folder):
 
 
 if __name__ == '__main__':
-    try:
-        main(sys.argv[1])
-    except IndexError:
-        print("Give the path of the folder containing the energy file for the 10 base pairs. By default the name of this file is 'Energy'.")
+    parser = argparse.ArgumentParser()
+    parser.add_argument('energy_folder', nargs='?', help="Give the path of the folder containing the energy file for the 10 base pairs. By default the name of this file is 'Energy'.")
+    args = parser.parse_args()
+    if args.energy_folder:
+        main(args.energy_folder)
+    else:
+        main()

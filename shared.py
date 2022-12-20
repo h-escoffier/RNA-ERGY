@@ -48,7 +48,7 @@ def distance_calculator(res1, res2):
     return distance
 
 
-def bp_attribution(c3_list, objective, frequency=None, gibbs_free_energy=None):
+def bp_attribution(c3_list, objective, frequency=None, gibbs_free_energy=None, energy=None):
     """
     From a list of bases one creates pairs according to pre-established conditions and either adds them according to
     the distance and the base pair to a list or calculates the Gibbs free energy
@@ -59,6 +59,7 @@ def bp_attribution(c3_list, objective, frequency=None, gibbs_free_energy=None):
     The 'frequency' list is of the form [[[AA], [0,0...0]], [[AC], [0,0...0]] ... [[XX], [0,0...0]]] with the last element of the list 'XX' contains the reference frequency.
     In this part the corresponding distance interval is incremented by 1 for each base pair.
     :param gibbs_free_energy: Only for 'scoring'
+    :param energy: Path to a folder 'Energy' containing 10 files (one per base pair) of 20 lines each.
     :return:
     """
     for res1 in c3_list:
@@ -77,7 +78,7 @@ def bp_attribution(c3_list, objective, frequency=None, gibbs_free_energy=None):
                                     frequency[10][1][int_dist] += 1
                     else:  # type == 'scoring'
                         if 0.5 <= dist <= 19.5:
-                            gibbs_free_energy += linear_interpolation(bp, dist)
+                            gibbs_free_energy += linear_interpolation(bp, dist, energy)
             if res1 == res2:
                 compare = True
     if objective == 'training':
@@ -86,18 +87,19 @@ def bp_attribution(c3_list, objective, frequency=None, gibbs_free_energy=None):
         return gibbs_free_energy
 
 
-def linear_interpolation(bp, dist):
+def linear_interpolation(bp, dist, energy):
     """
     A score value is calculated using linear interpolation.
     Each line is taken as the average of the interval. (e.g. line 1 corresponding to the interval [0, 1] is
     considered to be the value 0.5 in the interpolation.)
     Thus, only values between 0.5 and 19.5 are taken into account.
     Note this program is only used in the 'scoring.py' script but is in this file to avoid an error due to a circular import.
+    :param energy: Path to a folder 'Energy' containing 10 files (one per base pair) of 20 lines each.
     :param bp: A base pair
     :param dist: Distance between the two bases
     :return: Energy associated with base pair and distance
     """
-    with open('Energy/' + bp, 'r') as energy:
+    with open(energy + '/' + bp, 'r') as energy:
         content = energy.readlines()
     energy_before = float(content[math.floor(dist) - 1])
     energy_after = float(content[math.floor(dist)])
