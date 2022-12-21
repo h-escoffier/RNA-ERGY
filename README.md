@@ -56,4 +56,6 @@ The following arguments can be used with this script:
 * `path_to_pdb_file`: Provide the path to a the pdb file for an RNA molecule. 
 * `-h`, `--help`: Display a list of available arguments and their descriptions
 
+
+----------
 *Project developed as an examination for the GENIOMHE master's degree.*
