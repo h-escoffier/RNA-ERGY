@@ -4,10 +4,10 @@ This program contains various scripts for creating and training an objective fun
 
 ## Installation 
 
-'''git clone https://github.com/h-escoffier/RNA-ERGY
+```git clone https://github.com/h-escoffier/RNA-ERGY
 cd RNA-ERGY
 pip install -r requirements.txt
-'''
+```
 
 
 ## Usage
