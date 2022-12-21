@@ -4,7 +4,8 @@ This program contains various scripts for creating and training an objective fun
 
 ## Installation 
 
-```git clone https://github.com/h-escoffier/RNA-ERGY
+```
+git clone https://github.com/h-escoffier/RNA-ERGY
 cd RNA-ERGY
 pip install -r requirements.txt
 ```
@@ -12,4 +13,30 @@ pip install -r requirements.txt
 
 ## Usage
 
-Instructions for using the project, including any relevant examples or demos.
+### training.py 
+
+This script builds and trains an objective function using a dataset of 3D RNA structures that have been determined experimentally.
+
+```
+python3 trainig.py path_to_pdb_folder
+```
+
+### plot.py
+
+This script generates scoring profiles, which plot the estimated Gibbs free energy as a function of interatomic distances. 
+
+```
+python3 plot.py 
+or 
+python3 plot.py path_to_energy_folder
+```
+
+### scoring.py 
+
+This script uses the objective function to evaluate the accuracy of predicted structures from an RNA pdb file. 
+```
+python3 scoring.py path_to_pdb_file
+or 
+python3 scoring.py path_to_pdb_file path_to_energy_folder
+```
+
